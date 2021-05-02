@@ -1,5 +1,5 @@
 // This is a utterly stupid bot that i was originally going to make using python.
-// Thanks to my friend roasting me i am now using javasccript
+// Thanks to my friend roasting me i am now using javascript
 /*           
 
 ##################################################################
@@ -40,20 +40,18 @@ client.on('ready', () => {
 
 client.on('message', msg => {
 
-//do not uncomment without further permission
-//  sp.anz(msg);
+  // do not uncomment without further permission
+  // sp.anz(msg);
 
-  if (msg.content === 'ping') 
-  {
-    msg.reply('Pong!');
-  }
+  // selami "tak tak..." şakası. aklıma nereden geldi bilmiyorum. 
   if (msg.content.startsWith('!selami'))
   {
       msg.channel.send('Selami abinin selamı var.');
       selami = 1
   }
 
-  if(msg.content.toLowerCase().startsWith('hangi selami') && selami == 1) {
+  if(msg.content.toLowerCase().startsWith('hangi selami') && selami == 1) 
+  {
     msg.channel.send('selami abi dedim ya işte sen bunu "taktak kim o" şakası mı sandın? Zavallı');
     sleep(4000).then(() => { msg.channel.send('Tamam biraz ağır oldu özür dilerim.') });
     sleep(8000).then(()=> { msg.channel.send('ama sen de hep böyle yapıyorsun hayatta herşey taktak şakası olacak değil ya!') });
@@ -63,12 +61,11 @@ client.on('message', msg => {
   if (msg.content.toLowerCase().startsWith('aynen') && msg.author.tag != client.user.tag && !msg.author.bot)
   {
       msg.channel.send(aynenAry[easyRand(0,3)])
-      console.log('aynen')
   }
 
   if (msg.content.toLowerCase() === '!haha')
   {
-    msg.channel.send( komikdiil[easyRand(0,komikdiil.length)]);
+    msg.channel.send( komikdiil[easyRand(0,komikdiil.length)]);// this could be the most brilliant line in this bot.
   }
 
   if (msg.content.startsWith('!cat'))
@@ -98,14 +95,15 @@ client.on('message', msg => {
   console.log(msg.author.username + ' has sent a message, maybe i have friends afterall...');// this is here cuz' i don't have friends.
 });
 
-// is a easier random funciton.
+// easier random funciton.
 function easyRand(min, max)
 {
   return Math.floor(Math.random() * (max-min)) + min;
 }
 
-//makes a dumb promise to delay the process. # used for emotional typing. ;(
-function sleep(ms) {
+// makes a dumb promise to delay the process. # used for emotional typing. ;(
+function sleep(ms) 
+{
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -122,8 +120,7 @@ function whatAnimeDiscord(message)
   if (message.content.length == 7 && message.attachments.first().url)// is a direct attachment.
   {
     pure_url = message.attachments.first().url;// extract url from the message.
-  } 
-
+  }
   else if(message.content.length > 8)// is a link. # if it's longer than '!anime?' there must be a link
   {
     if (ayir(message.content, 1))
@@ -134,8 +131,7 @@ function whatAnimeDiscord(message)
   // search for the anime in the API
   fetch('https://trace.moe/api/search?url=' + pure_url)
   .then(response => response.json())
-  .then(data => 
-  {
+  .then(data => {
     message.reply(processAnime(data));
   })
 }
