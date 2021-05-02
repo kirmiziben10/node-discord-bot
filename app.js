@@ -80,4 +80,52 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+<<<<<<< Updated upstream
+=======
+// splits a given string by spaces and feeds into an array.
+function ayir(text, index)
+{
+  tmp = text.split(' ');
+  return tmp[index];
+}
+
+function whatAnimeDiscord(message)
+{
+  // check if the image is a direct attachment or a link and return the "pure_url".
+  if (message.content.length == 7 && message.attachments.first().url)// is a direct attachment.
+  {
+    pure_url = message.attachments.first().url;// extract url from the message.
+  }
+  else if(message.content.length > 8)// is a link. # if it's longer than '!anime?' there must be a link
+  {
+    if (ayir(message.content, 1))
+    pure_url = ayir(message.content, 1);// seperate by spaces and use the second in array.
+  }
+  else message.reply('ULAN! NEREYE ATTIN RESMİ ??!????!');
+  
+  // send the url to the API ane get the resopnse.
+  fetch('https://trace.moe/api/search?url=' + pure_url)
+  .then(response => response.json())
+  .then(data => {
+    message.reply(processAnime(data));
+  })
+}
+
+function processAnime(data)
+{
+  // parse the JSON
+  first = data.docs[0];// First in the docs array is the strongest guess.
+  romaji = data.docs[0].title_romaji;// Using latin version of the every anime.
+  episode = data.docs[0].episode;//self explanatory.
+  season = data.docs[0].season;// self explanatory.
+  confidence = data.docs[0].similarity;// self explanatory.
+
+  // set final response according to the type of the anime.
+  if (episode == null) response = ' İsim: ' + romaji + '; %' + Math.floor(confidence*100) + ' eminim.';// This is for the movie type. # (don't know if there are season based animes with no episodes)
+  else if  (season == '') response = ' İsim: ' + romaji + ', Bölüm: ' + episode + '; %' + Math.floor(confidence*100) + ' eminim.';// is for single season animes.
+  else response = ' İsim: ' + romaji + ', Sezon: ' + season +', Bölüm: ' + episode + '; %' + Math.floor(confidence*100) + ' eminim.';// is for multiple season animes.
+  return response;
+}
+
+>>>>>>> Stashed changes
 client.login('ODM3NDQ2MDQyMTg1MjM2NTEw.YIsqZw.Ov2rsGeFkY8Fx9dvXfdBAWy5dkE');
