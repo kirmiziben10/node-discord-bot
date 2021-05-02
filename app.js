@@ -128,7 +128,7 @@ function whatAnimeDiscord(message)
   }
   else message.reply('ULAN! NEREYE ATTIN RESMİ ??!????!');
   
-  // search for the anime in the API
+  // send the url to the API ane get the resopnse.
   fetch('https://trace.moe/api/search?url=' + pure_url)
   .then(response => response.json())
   .then(data => {
@@ -143,11 +143,12 @@ function processAnime(data)
   romaji = data.docs[0].title_romaji;// Using latin version of the every anime.
   episode = data.docs[0].episode;//self explanatory.
   season = data.docs[0].season;// self explanatory.
+  confidence = data.docs[0].similarity;// self explanatory.
 
   // set final response according to the type of the anime.
-  if (episode == null) response = 'İsim: ' + romaji;// This is for the movie type. # (don't know if there are season based animes with no episodes)
-  else if  (season == '') response = 'İsim: ' + romaji + ', Bölüm: ' + episode;// is for single season animes
-  else response = 'İsim: ' + romaji + ', Sezon: ' + season +', Bölüm: ' + episode;// is for multiple season animes.
+  if (episode == null) response = ' İsim: ' + romaji + '; %' + Math.floor(confidence*100) + ' eminim.';// This is for the movie type. # (don't know if there are season based animes with no episodes)
+  else if  (season == '') response = ' İsim: ' + romaji + ', Bölüm: ' + episode + '; %' + Math.floor(confidence*100) + ' eminim.';// is for single season animes.
+  else response = ' İsim: ' + romaji + ', Sezon: ' + season +', Bölüm: ' + episode + '; %' + Math.floor(confidence*100) + ' eminim.';// is for multiple season animes.
   return response;
 }
 
